@@ -13,11 +13,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public ModelAndView loginGet() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (!(auth instanceof AnonymousAuthenticationToken)) {  // l'utilisateur est déjà connecté
-            return new ModelAndView("redirect:/errorAlreadyConnected");
-        }
-        return new ModelAndView("login");
+       // TODO : 
     }
 }

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "users")
 @Data
-public class User implements UserDetails {
+public class User {
 
     /**
 	 * 
@@ -94,8 +94,8 @@ public class User implements UserDetails {
 
     public User(String username, String password, String firstname, String lastname, Collection<RoleEnum> roles) {
         this.username = username;
-        this.password = BCryptManagerUtil.passwordencoder().encode(password);
-//        this.password = password;
+        // TODO
+        this.password = 
         this.firstname = firstname;
         this.lastname = lastname;
         this.accountNonExpired = true;
@@ -109,6 +109,43 @@ public class User implements UserDetails {
     
     public Long getIdUser() {
 		return idUser;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.username;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+	    String roles = StringUtils.collectionToCommaDelimitedString(getRoles().stream()
+	            .map(Enum::name).collect(Collectors.toList()));
+	    return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return this.accountNonExpired;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return this.accountNonLocked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return this.credentialsNonExpired;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
 	}
 
 	public void setIdUser(Long idUser) {
@@ -159,46 +196,10 @@ public class User implements UserDetails {
 		this.enabled = enabled;
 	}
 
-	@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        String roles = StringUtils.collectionToCommaDelimitedString(getRoles().stream()
-                .map(Enum::name).collect(Collectors.toList()));
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
-    }
-
-    public void setPassword(String password) {
+	public void setPassword(String password) {
         if (!password.isEmpty()) {
-            this.password = BCryptManagerUtil.passwordencoder().encode(password);
+            // TODO :
+        	this.password = 
         }
     }
-
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.username;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return this.accountNonExpired;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return this.accountNonLocked;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return this.credentialsNonExpired;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return this.enabled;
-	}
 }
