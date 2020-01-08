@@ -13,8 +13,8 @@ import com.wildcodeschool.spring.security.persistence.enums.RoleEnum;
 import com.wildcodeschool.spring.security.utils.BCryptManagerUtil;
 
 @Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+// TODO : EnableWebSecurity and extends WebSecurityConfigurerAdapter
+public class WebSecurityConfig {
 
 	private final String adminRole = RoleEnum.ADMINISTRATOR.name();
 
@@ -35,23 +35,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
-			.antMatchers("/auth**").authenticated()
-			.antMatchers("/auth/admin**").hasAuthority(adminRole)
+			.antMatchers( // TODO : Add pages require authentication
+					).authenticated()
+			.antMatchers( // TODO : Add pages require to be Admin
+).hasAuthority(adminRole)
 			.anyRequest().permitAll()
 		.and()
-			.exceptionHandling().accessDeniedPage("/errorAccessUnAuthorised")
+			.exceptionHandling().accessDeniedPage( // TODO : Add page to error access denied
+					)
 		.and()
 			.formLogin()
-				.loginPage("/login")
-				.defaultSuccessUrl("/auth").failureUrl("/error")
-				.usernameParameter("username").passwordParameter("username")
+				.loginPage( // TODO : Add login page
+						)
+				.defaultSuccessUrl(// TODO : success auhentication page
+						).failureUrl( // TODO : failure auhentication page
+								)
+				.usernameParameter( // TODO : username field
+						
+						).passwordParameter( // TODO : password field
+								)
 				.and()
-				.logout().invalidateHttpSession(true).logoutUrl("/logout")
-				.logoutSuccessUrl("/login")
+				.logout().invalidateHttpSession(true).logoutUrl( // TODO : logout page
+						)
+				.logoutSuccessUrl( // TODO : the logout success page => ?
+						)
 				.and()
 				.csrf()
 				.and()
 				.sessionManagement().maximumSessions(1)
-				.expiredUrl("/login");
+				.expiredUrl( // TODO : Expired Url => ?
+						
+						);
 	}
 }
