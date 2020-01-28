@@ -13,6 +13,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public ModelAndView loginGet() {
-       // TODO : 
+       return new ModelAndView("login");
     }
 }
